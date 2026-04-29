@@ -1,12 +1,15 @@
 <style>
-/* 直接永久隐藏左侧边栏 */
-.sidebar {
+/* 隐藏整个顶部导航和搜索栏 */
+header,
+#header,
+.top-header,
+.search-container {
     display: none !important;
 }
-/* 让主内容铺满全屏 */
-.container {
-    padding-left: 0 !important;
-    margin-left: 0 !important;
-    width: 100% !important;
+/* 让主内容直接顶到页面最顶部 */
+.main-content,
+#main-content {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
 }
 </style>
