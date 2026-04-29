@@ -1,14 +1,25 @@
 <style>
-/* 隐藏整个顶部导航和搜索栏 */
-header,
+/* 强制隐藏整个顶部头部区域 */
+.header-wrap,
 #header,
+header,
 .top-header,
-.search-container {
+.nav-tabs,
+.search-box,
+#search,
+.search-container,
+.search-bar,
+.bg-banner {
     display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    overflow: hidden !important;
 }
 /* 让主内容直接顶到页面最顶部 */
 .main-content,
-#main-content {
+#main-content,
+.container,
+.wrapper {
     margin-top: 0 !important;
     padding-top: 0 !important;
 }
