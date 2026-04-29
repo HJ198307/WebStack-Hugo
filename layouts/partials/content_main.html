@@ -1,56 +1,125 @@
 <style>
-/* 🔥 强制高亮第一个链接：n1n AI */
-.row .url-card:first-child .url-body {
-    transform: scale(1.2) !important;
+/* 1. 把 n1n AI 单独置顶，放在所有模块最前面 */
+.featured-card-wrapper {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f0fff9 0%, #ffffff 100%);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 212, 132, 0.15);
+}
+/* 2. 高亮 n1n AI 卡片，其他卡片不受影响 */
+.featured-card-wrapper .url-body {
+    transform: scale(1.15) !important;
     border: 3px solid #00d484 !important;
-    background: #f0fff9 !important;
+    background: #ffffff !important;
     border-radius: 12px !important;
-    box-shadow: 0 0 25px rgba(0, 212, 132, 0.4) !important;
+    box-shadow: 0 0 25px rgba(0, 212, 132, 0.3) !important;
     padding: 10px !important;
     transition: all 0.3s ease !important;
 }
-.row .url-card:first-child:hover .url-body {
-    transform: scale(1.25) !important;
-    box-shadow: 0 0 35px rgba(0, 212, 132, 0.6) !important;
+.featured-card-wrapper:hover .url-body {
+    transform: scale(1.2) !important;
+    box-shadow: 0 0 35px rgba(0, 212, 132, 0.5) !important;
 }
-/* 标题放大加粗 */
-.row .url-card:first-child .url-info strong {
+/* 3. 放大标题和图标 */
+.featured-card-wrapper .url-info strong {
     font-size: 18px !important;
     color: #00a86f !important;
     font-weight: 900 !important;
 }
-/* 图标放大 */
-.row .url-card:first-child .url-img img {
+.featured-card-wrapper .url-img img {
     width: 50px !important;
     height: 50px !important;
 }
 </style>
 
 <div id="content" class="content-site customize-site">
+    {{ range $index, $section := .Site.Data.webstack }}
+        {{ if eq $index 0 }}
+            {{ range $section.links }}
+                {{ if eq .title "n1n AI" }}
+                    <!-- 单独置顶的 n1n AI 卡片 -->
+                    <div class="featured-card-wrapper">
+                        <h4 class="text-gray text-lg mb-4">
+                            <i class="site-tag iconfont icon-tag icon-lg mr-1"></i>
+                            🔥 重点推荐
+                        </h4>
+                        <div class="row">
+                            <div class="url-card col-6 col-sm-6 col-md-4 col-xl-5a col-xxl-6a">
+                                <div class="url-body default">
+                                    {{ if .qrcode }}
+                                        {{ if findRE "http.*?(.|\n)*?" .qrcode }}
+                                            <a href="javascript:" target="" class="card no-c mb-4" data-toggle="tooltip" data-placement="bottom" data-html="true" 
+                                            title="<img src='{{ .qrcode }}' width='128'>">
+                                        {{ else }}
+                                            <a href="javascript:" target="" class="card no-c mb-4" data-toggle="tooltip" data-placement="bottom" data-html="true"
+                                            title="<img src='{{ $.Site.Params.logosPath }}/{{ .qrcode }}' width='128'>">
+                                        {{ end }}
+                                    {{ else }}
+                                        <a href="{{ .url }}" target="_blank" data-id="" data-url="{{ .url }}"
+                                        class="card no-c mb-4" data-toggle="tooltip" data-placement="bottom" data-original-title="{{ .description }}">
+                                    {{ end }}
+                                    <div class="card-body">
+                                        <div class="url-content d-flex align-items-center">
+                                            <div class="url-img mr-2 d-flex align-items-center justify-content-center">
+                                                {{ if findRE "http.*?(.|\n)*?" .logo }}
+                                                    {{ if $.Site.Params.defaultLogo }}
+                                                        <img class="lazy" src="{{ .logo }}" data-src="{{ .logo }}"
+                                                            onerror="javascript:this.src='{{ $.Site.Params.defaultLogo }}'" alt="{{ .title }}">
+                                                    {{ else }}
+                                                        <img class="lazy" src="{{ .logo }}" data-src="{{ .logo }}"
+                                                            onerror="javascript:this.src='{{ .logo }}'" alt="{{ .title }}">
+                                                    {{ end }}
+                                                {{ else }}
+                                                    {{ if $.Site.Params.defaultLogo }}
+                                                        <img class="lazy" src="{{ $.Site.Params.logosPath }}/{{ .logo }}" data-src="{{ $.Site.Params.logosPath }}/{{ .logo }}"
+                                                            onerror="javascript:this.src='{{ $.Site.Params.defaultLogo }}'" alt="{{ .title }}">
+                                                    {{ else }}
+                                                        <img class="lazy" src="{{ $.Site.Params.logosPath }}/{{ .logo }}" data-src="{{ $.Site.Params.logosPath }}/{{ .logo }}"
+                                                            onerror="javascript:this.src='{{ $.Site.Params.logosPath }}'" alt="{{ .title }}">
+                                                    {{ end }}
+                                                {{ end }}
+                                            </div>
+                                            <div class="url-info flex-fill">
+                                                <div class="text-sm overflowClip_1">
+                                                    <strong>{{ .title }}</strong>
+                                                </div>
+                                                <p class="overflowClip_1 m-0 text-muted text-xs">{{ .description }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </a>
+                                    <a href="{{ .url }}" class="togo text-center text-muted is-views" data-id="689"
+                                        data-toggle="tooltip" data-placement="right" title="直达" rel="nofollow">
+                                        <i class="iconfont icon-goto"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{ end }}
+            {{ end }}
+        {{ end }}
+    {{ end }}
+
+    <!-- 原有的所有模块，完全不变 -->
     {{ range .Site.Data.webstack }}
         {{ if .list }}
             {{ range .list }}
-	    <!--正文网址导航-->
-            <!-- {{ .term }} -->
             <div class="d-flex flex-fill">
                 <h4 class="text-gray text-lg mb-4">
                     <i class="site-tag iconfont icon-tag icon-lg mr-1" id="{{ md5 .term }}"></i>
                     {{ .term }}
                 </h4>
                 <div class="flex-fill"></div>
-                <!--a class='btn-move text-xs' href='#'>more+</a-->
             </div>
-            <!--获取内容列表-->
             <div class="row">
                 {{ range .links }}
-                <div class="url-card col-6  col-sm-6 col-md-4 col-xl-5a col-xxl-6a">
+                <div class="url-card col-6 col-sm-6 col-md-4 col-xl-5a col-xxl-6a">
                     <div class="url-body default">
-			<!--去除 Tooltip
-                        <a href="{{ .url }}" target="_blank" data-id="" data-url="{{ .url }}" class="card no-c mb-4" title="{{ .title }}">
-			去除 Tooltip -->
-			{{ if .qrcode }}
+                        {{ if .qrcode }}
                             {{ if findRE "http.*?(.|\n)*?" .qrcode }}
-                    	        <a href="javascript:" target="" class="card no-c mb-4" data-toggle="tooltip" data-placement="bottom" data-html="true" 
+                                <a href="javascript:" target="" class="card no-c mb-4" data-toggle="tooltip" data-placement="bottom" data-html="true" 
                                 title="<img src='{{ .qrcode }}' width='128'>">
                             {{ else }}
                                 <a href="javascript:" target="" class="card no-c mb-4" data-toggle="tooltip" data-placement="bottom" data-html="true"
@@ -59,36 +128,36 @@
                         {{ else }}
                             <a href="{{ .url }}" target="_blank" data-id="" data-url="{{ .url }}"
                             class="card no-c mb-4" data-toggle="tooltip" data-placement="bottom" data-original-title="{{ .description }}">
-			{{ end }}
-                            <div class="card-body">
-                                <div class="url-content d-flex align-items-center">
-                                    <div class="url-img mr-2 d-flex align-items-center justify-content-center">
-                                        {{ if findRE "http.*?(.|\n)*?" .logo }}
-					    {{ if $.Site.Params.defaultLogo }}
+                        {{ end }}
+                        <div class="card-body">
+                            <div class="url-content d-flex align-items-center">
+                                <div class="url-img mr-2 d-flex align-items-center justify-content-center">
+                                    {{ if findRE "http.*?(.|\n)*?" .logo }}
+                                        {{ if $.Site.Params.defaultLogo }}
                                             <img class="lazy" src="{{ .logo }}" data-src="{{ .logo }}"
                                                 onerror="javascript:this.src='{{ $.Site.Params.defaultLogo }}'" alt="{{ .title }}">
-					    {{ else }}
-					    <img class="lazy" src="{{ .logo }}" data-src="{{ .logo }}"
-                                                onerror="javascript:this.src='{{ .logo }}'" alt="{{ .title }}">
-					    {{ end }}
                                         {{ else }}
-					    {{ if $.Site.Params.defaultLogo }}
-					    <img class="lazy" src="{{ $.Site.Params.logosPath }}/{{ .logo }}" data-src="{{ $.Site.Params.logosPath }}/{{ .logo }}"
-                                                onerror="javascript:this.src='{{ $.Site.Params.defaultLogo }}'" alt="{{ .title }}">
-					    {{ else }}
-                                            <img class="lazy" src="{{ $.Site.Params.logosPath }}/{{ .logo }}" data-src="{{ $.Site.Params.logosPath }}/{{ .logo }}"
-                                                onerror="javascript:this.src='{{ $.Site.Params.logosPath }}/{{ .logo }}'" alt="{{ .title }}">
-					    {{ end }}
+                                            <img class="lazy" src="{{ .logo }}" data-src="{{ .logo }}"
+                                                onerror="javascript:this.src='{{ .logo }}'" alt="{{ .title }}">
                                         {{ end }}
+                                    {{ else }}
+                                        {{ if $.Site.Params.defaultLogo }}
+                                            <img class="lazy" src="{{ $.Site.Params.logosPath }}/{{ .logo }}" data-src="{{ $.Site.Params.logosPath }}/{{ .logo }}"
+                                                onerror="javascript:this.src='{{ $.Site.Params.defaultLogo }}'" alt="{{ .title }}">
+                                        {{ else }}
+                                            <img class="lazy" src="{{ $.Site.Params.logosPath }}/{{ .logo }}" data-src="{{ $.Site.Params.logosPath }}/{{ .logo }}"
+                                                onerror="javascript:this.src='{{ $.Site.Params.logosPath }}'" alt="{{ .title }}">
+                                        {{ end }}
+                                    {{ end }}
+                                </div>
+                                <div class="url-info flex-fill">
+                                    <div class="text-sm overflowClip_1">
+                                        <strong>{{ .title }}</strong>
                                     </div>
-                                    <div class="url-info flex-fill">
-                                        <div class="text-sm overflowClip_1">
-                                            <strong>{{ .title }}</strong>
-                                        </div>
-                                        <p class="overflowClip_1 m-0 text-muted text-xs">{{ .description }}</p>
-                                    </div>
+                                    <p class="overflowClip_1 m-0 text-muted text-xs">{{ .description }}</p>
                                 </div>
                             </div>
+                        </div>
                         </a>
                         <a href="{{ .url }}" class="togo text-center text-muted is-views" data-id="689"
                             data-toggle="tooltip" data-placement="right" title="直达" rel="nofollow">
@@ -97,32 +166,23 @@
                     </div>
                 </div>
                 {{ end }}
-            </div><!--end row-->
+            </div>
             <br />
-            <!--END {{ .term }} -->
             {{ end }}
         {{ else }}
-	    <!--常用推荐-->
-            <!-- {{ .taxonomy }} -->
             <div class="d-flex flex-fill">
                 <h4 class="text-gray text-lg mb-4">
                     <i class="site-tag iconfont icon-tag icon-lg mr-1" id="{{ md5 .taxonomy }}"></i>
                     {{ .taxonomy }}
                 </h4>
-                <!--div class="flex-fill"></div>
-                <a class='btn-move text-xs' href='#'>more+</a-->
             </div>
-            <!--获取内容列表-->
             <div class="row">
                 {{ range .links }}
-                <div class="url-card col-6  col-sm-6 col-md-4 col-xl-5a col-xxl-6a">
+                <div class="url-card col-6 col-sm-6 col-md-4 col-xl-5a col-xxl-6a">
                     <div class="url-body default">
-			<!--去除 Tooltip
-			<a href="{{ .url }}" target="_blank" data-id="" data-url="{{ .url }}" class="card no-c mb-4" title="{{ .title }}">
-			-->
-			{{ if .qrcode }}
+                        {{ if .qrcode }}
                             {{ if findRE "http.*?(.|\n)*?" .qrcode }}
-			        <a href="javascript:" target="" class="card no-c mb-4" data-toggle="tooltip" data-placement="bottom" data-html="true" 
+                                <a href="javascript:" target="" class="card no-c mb-4" data-toggle="tooltip" data-placement="bottom" data-html="true" 
                                 title="<img src='{{ .qrcode }}' width='128'>">
                             {{ else }}
                                 <a href="javascript:" target="" class="card no-c mb-4" data-toggle="tooltip" data-placement="bottom" data-html="true"
@@ -131,36 +191,36 @@
                         {{ else }}
                             <a href="{{ .url }}" target="_blank" data-id="" data-url="{{ .url }}" 
                             class="card no-c mb-4" data-toggle="tooltip" data-placement="bottom" data-original-title="{{ .description }}">
-			{{ end }}
-                            <div class="card-body">
-                                <div class="url-content d-flex align-items-center">
-                                    <div class="url-img mr-2 d-flex align-items-center justify-content-center">
-                                        {{ if findRE "http.*?(.|\n)*?" .logo }}
-					    {{ if $.Site.Params.defaultLogo }}
-					    <img class="lazy" src="{{ .logo }}" data-src="{{ .logo }}"
+                        {{ end }}
+                        <div class="card-body">
+                            <div class="url-content d-flex align-items-center">
+                                <div class="url-img mr-2 d-flex align-items-center justify-content-center">
+                                    {{ if findRE "http.*?(.|\n)*?" .logo }}
+                                        {{ if $.Site.Params.defaultLogo }}
+                                            <img class="lazy" src="{{ .logo }}" data-src="{{ .logo }}"
                                                 onerror="javascript:this.src='{{ $.Site.Params.defaultLogo }}'" alt="{{ .title }}">
-					    {{ else }}
+                                        {{ else }}
                                             <img class="lazy" src="{{ .logo }}" data-src="{{ .logo }}"
                                                 onerror="javascript:this.src='{{ .logo }}'" alt="{{ .title }}">
-					    {{ end }}
-                                        {{ else }}
-					    {{ if $.Site.Params.defaultLogo }}
+                                        {{ end }}
+                                    {{ else }}
+                                        {{ if $.Site.Params.defaultLogo }}
                                             <img class="lazy" src="{{ $.Site.Params.logosPath }}/{{ .logo }}" data-src="{{ $.Site.Params.logosPath }}/{{ .logo }}"
                                                 onerror="javascript:this.src='{{ $.Site.Params.defaultLogo }}'" alt="{{ .title }}">
-					    {{ else }}
+                                        {{ else }}
                                             <img class="lazy" src="{{ $.Site.Params.logosPath }}/{{ .logo }}" data-src="{{ $.Site.Params.logosPath }}/{{ .logo }}"
                                                 onerror="javascript:this.src='{{ $.Site.Params.logosPath }}'" alt="{{ .title }}">
-					    {{ end }}
                                         {{ end }}
+                                    {{ end }}
+                                </div>
+                                <div class="url-info flex-fill">
+                                    <div class="text-sm overflowClip_1">
+                                        <strong>{{ .title }}</strong>
                                     </div>
-                                    <div class="url-info flex-fill">
-                                        <div class="text-sm overflowClip_1">
-                                            <strong>{{ .title }}</strong>
-                                        </div>
-                                        <p class="overflowClip_1 m-0 text-muted text-xs">{{ .description }}</p>
-                                    </div>
+                                    <p class="overflowClip_1 m-0 text-muted text-xs">{{ .description }}</p>
                                 </div>
                             </div>
+                        </div>
                         </a>
                         <a href="{{ .url }}" class="togo text-center text-muted is-views" data-id="689"
                             data-toggle="tooltip" data-placement="right" title="直达" rel="nofollow">
@@ -171,7 +231,6 @@
                 {{ end }}
             </div>
             <br />
-            <!--END {{ .taxonomy }} -->
         {{ end }}
     {{ end }}                        
 </div>
