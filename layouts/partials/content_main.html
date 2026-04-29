@@ -1,35 +1,31 @@
 <style>
-/* 强制让第一个卡片（你的n1n AI）置顶并高亮 */
-.card-container .card:first-child {
-    /* 放大卡片 */
-    width: 100% !important;
-    max-width: 800px !important;
-    margin: 20px auto !important;
-    padding: 20px !important;
-    font-size: 1.2em !important;
-    /* 高亮效果 */
-    border: 3px solid #00ff88 !important;
-    background-color: #f0fff8 !important;
+/* 🔥 强制高亮第一个链接：n1n AI */
+.row .url-card:first-child .url-body {
+    transform: scale(1.2) !important;
+    border: 3px solid #00d484 !important;
+    background: #f0fff9 !important;
     border-radius: 12px !important;
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4) !important;
-    position: relative;
-    z-index: 100;
+    box-shadow: 0 0 25px rgba(0, 212, 132, 0.4) !important;
+    padding: 10px !important;
+    transition: all 0.3s ease !important;
 }
-/* 放大卡片内的图标和文字 */
-.card-container .card:first-child .icon {
-    width: 64px !important;
-    height: 64px !important;
+.row .url-card:first-child:hover .url-body {
+    transform: scale(1.25) !important;
+    box-shadow: 0 0 35px rgba(0, 212, 132, 0.6) !important;
 }
-.card-container .card:first-child .title {
-    font-size: 1.5em !important;
-    font-weight: bold !important;
-    color: #00aa66 !important;
+/* 标题放大加粗 */
+.row .url-card:first-child .url-info strong {
+    font-size: 18px !important;
+    color: #00a86f !important;
+    font-weight: 900 !important;
 }
-/* 让页面其他模块向下移动，不挡住它 */
-.card-container {
-    padding-top: 10px !important;
+/* 图标放大 */
+.row .url-card:first-child .url-img img {
+    width: 50px !important;
+    height: 50px !important;
 }
 </style>
+
 <div id="content" class="content-site customize-site">
     {{ range .Site.Data.webstack }}
         {{ if .list }}
