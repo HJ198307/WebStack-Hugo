@@ -2,7 +2,7 @@
     {{ range .Site.Data.webstack }}
         {{ if .list }}
             {{ range .list }}
-	    <!--正文网址导航--》
+	    <!--正文网址导航-->
             <!-- {{ .term }} -->
             <div class="d-flex flex-fill">
                 <h4 class="text-gray text-lg mb-4">
@@ -121,7 +121,7 @@
                                                 onerror="javascript:this.src='{{ $.Site.Params.defaultLogo }}'" alt="{{ .title }}">
 					    {{ else }}
                                             <img class="lazy" src="{{ $.Site.Params.logosPath }}/{{ .logo }}" data-src="{{ $.Site.Params.logosPath }}/{{ .logo }}"
-                                                onerror="javascript:this.src='{{ $.Site.Params.logosPath }}/{{ .logo }}'" alt="{{ .title }}">
+                                                onerror="javascript:this.src='{{ $.Site.Params.logosPath }}'" alt="{{ .title }}">
 					    {{ end }}
                                         {{ end }}
                                     </div>
@@ -146,15 +146,4 @@
             <!--END {{ .taxonomy }} -->
         {{ end }}
     {{ end }}                        
-
-    <h4 class="text-gray text-lg mb-4">
-        <i class="iconfont icon-book-mark-line icon-lg mr-2" id="friendlink"></i>友情链接
-    </h4>
-    <div class="friendlink text-xs card">
-        <div class="card-body"> 
-	    {{ range .Site.Data.friendlinks }}
-	    <a href="{{ .url }}" title="{{ .description }}" target="_blank">{{ .title }}</a>
-	    {{ end }}
-        </div>
-    </div>
 </div>
