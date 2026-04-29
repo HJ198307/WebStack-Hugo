@@ -1,3 +1,35 @@
+<style>
+/* 强制让第一个卡片（你的n1n AI）置顶并高亮 */
+.card-container .card:first-child {
+    /* 放大卡片 */
+    width: 100% !important;
+    max-width: 800px !important;
+    margin: 20px auto !important;
+    padding: 20px !important;
+    font-size: 1.2em !important;
+    /* 高亮效果 */
+    border: 3px solid #00ff88 !important;
+    background-color: #f0fff8 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.4) !important;
+    position: relative;
+    z-index: 100;
+}
+/* 放大卡片内的图标和文字 */
+.card-container .card:first-child .icon {
+    width: 64px !important;
+    height: 64px !important;
+}
+.card-container .card:first-child .title {
+    font-size: 1.5em !important;
+    font-weight: bold !important;
+    color: #00aa66 !important;
+}
+/* 让页面其他模块向下移动，不挡住它 */
+.card-container {
+    padding-top: 10px !important;
+}
+</style>
 <div id="content" class="content-site customize-site">
     {{ range .Site.Data.webstack }}
         {{ if .list }}
